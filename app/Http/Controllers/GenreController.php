@@ -14,7 +14,7 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(['message' => 'This is login!'], 200);
     }
 
     /**
