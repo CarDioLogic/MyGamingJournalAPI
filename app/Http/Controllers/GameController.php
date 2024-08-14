@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use App\Genre;
+use App\Publisher;
+use App\Platform;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Resources\GamesResource;
 use Illuminate\Http\Request;
@@ -19,7 +22,9 @@ class GameController extends Controller
      */
     public function index()
     {
-        return Game::all();
+        $games = Game::with(['genres', 'platforms', 'publishers'])->get();
+
+        return $games;
     }
 
     /**
@@ -54,12 +59,42 @@ class GameController extends Controller
             ]
         );
 
-        //return new GamesResource($game);
-        return $this->success([
-            'game' => $game,
-        ]);
+        $this->createNewGenres($request, $game);
+        $this->createNewPlatforms($request, $game);
+        $this->createNewPublishers($request, $game);
+
+    return $this->success([
+        'game' => new GamesResource($game),
+    ]);
     }
 
+    public function createNewGenres(StoreGameRequest $request, Game $game){
+        $genreIds = [];
+        foreach ($request->genres as $genreName) {
+            $genre = Genre::firstOrCreate(['name' => $genreName]);
+            $genreIds[] = $genre->id;
+        }
+    
+        $game->genres()->sync($genreIds);
+    }
+    public function createNewPlatforms(StoreGameRequest $request, Game $game){
+        $platformsIds = [];
+        foreach ($request->platforms as $platformName) {
+            $platform = Platform::firstOrCreate(['name' => $platformName]);
+            $platformsIds[] = $platform->id;
+        }
+    
+        $game->platforms()->sync($platformsIds);
+    }
+    public function createNewPublishers(StoreGameRequest $request, Game $game){
+        $publisherIds = [];
+        foreach ($request->publishers as $publisherName) {
+            $publisher = Publisher::firstOrCreate(['name' => $publisherName]);
+            $publisherIds[] = $publisher->id;
+        }
+    
+        $game->publishers()->sync($publisherIds);
+    }
     /**
      * Display the specified resource.
      *

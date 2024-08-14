@@ -26,7 +26,25 @@ class GamesResource extends JsonResource
                 'release_date' => $this->release_date,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
-            ]
+            ],
+            'genres' => $this->genres->map(function ($genre) {
+                return [
+                    'id' => $genre->id,
+                    'name' => $genre->name,
+                ];
+            }),
+            'platforms' => $this->platforms->map(function ($platform) {
+                return [
+                    'id' => $platform->id,
+                    'name' => $platform->name,
+                ];
+            }),
+            'publishers' => $this->publishers->map(function ($publisher) {
+                return [
+                    'id' => $publisher->id,
+                    'name' => $publisher->name,
+                ];
+            }),
         ];
     }
 }
