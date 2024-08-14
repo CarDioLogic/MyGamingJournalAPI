@@ -21,7 +21,7 @@ class CreateGamesTable extends Migration
             $table->string('short_description');
             $table->string('game_site_url');
             $table->string('game_img_url');
-            $table->date('release_date');
+            $table->string('release_date');
             $table->timestamps();
         });
     }

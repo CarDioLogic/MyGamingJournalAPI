@@ -9,11 +9,11 @@ class Game extends Model
     protected $fillable = [
         'rawgApiId',
         'title',
+        'thumbnail',
         'short_description',
         'game_site_url',
         'game_img_url',
         'release_date',
-        'rawgApiId',
     ];
     protected $hidden = ['pivot'];
 

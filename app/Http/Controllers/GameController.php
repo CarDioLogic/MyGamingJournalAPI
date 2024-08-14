@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use App\Http\Requests\StoreGameRequest;
+use App\Http\Resources\GamesResource;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses; 
 
 class GameController extends Controller
 {
+    use HttpResponses;
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        return Game::all();
     }
 
     /**
@@ -33,9 +38,26 @@ class GameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGameRequest $request)
     {
-        //
+        $request->validated();
+
+        $game = Game::firstOrCreate(
+            ['rawgApiId' => $request->rawgApiId],
+            [
+                'title' => $request->title,
+                'thumbnail' => $request->thumbnail,
+                'short_description' => $request->short_description,
+                'game_site_url' => $request->game_site_url,
+                'game_img_url' => $request->game_img_url,
+                'release_date' => $request->release_date,
+            ]
+        );
+
+        //return new GamesResource($game);
+        return $this->success([
+            'game' => $game,
+        ]);
     }
 
     /**

@@ -26,14 +26,8 @@ Route::get('publishers/search/', 'PublisherController@search');
 Route::apiResource('developers', 'DeveloperController');
 Route::get('developers/search/', 'DeveloperController@search');
 
-Route::apiResource('games', 'GamesController');
-Route::get('games/search/', 'GamesController@search');
-
 Route::apiResource('playLaterGames', 'PlayLaterGamesController');
 Route::get('playLaterGames/search/', 'PlayLaterGamesController@search');
-
-Route::apiResource('completedGames', 'CompletedGamesController');
-Route::get('completedGames/search/', 'CompletedGamesController@search');
 
 Route::apiResource('currentlyPlayingGames', 'CurrentlyPlayingGamesController');
 Route::get('currentlyPlayingGames/search/', 'CurrentlyPlayingGamesController@search');
@@ -52,5 +46,10 @@ Route::post('/register', 'UserController@register');
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', 'UserController@logout');
+
+    Route::apiResource('games', 'GameController');
+    Route::apiResource('completedGames', 'CompletedGameController');
+
+
     Route::apiResource('genres', 'GenreController');
 });
