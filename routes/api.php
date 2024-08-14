@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('genres', 'GenreController');
 Route::get('genres/search/', 'GenreController@search');
 
 Route::apiResource('platforms', 'PlatformController');
@@ -48,4 +47,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', 'UserController@login');
 Route::post('/register', 'UserController@register');
-Route::post('/logout', 'UserController@logout');
+
+
+//protected routes
+Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::post('/logout', 'UserController@logout');
+    Route::apiResource('genres', 'GenreController');
+});
