@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\CurrentlyPlayingGame;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreGameRequest;
+use Auth;
+use App\Traits\HttpResponses; 
+use App\Traits\GameManagement;
 
 class CurrentlyPlayingGameController extends Controller
 {
+    use HttpResponses;
+    use GameManagement;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class CurrentlyPlayingGameController extends Controller
      */
     public function index()
     {
-        //
+        return CurrentlyPlayingGame::all();
     }
 
     /**
@@ -33,9 +39,35 @@ class CurrentlyPlayingGameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGameRequest $request)
     {
-        //
+        $request->validated();
+
+        $existingGame = $this->checkOrCreateGame($request);
+
+        // Also need to verify if the game_id is already in other lists
+        // Example of adding a completed game:
+
+        if(CurrentlyPlayingGame::where('game_id', $existingGame->id)->exists()
+        && CurrentlyPlayingGame::where('user_id', Auth::user()->id)->exists())
+        {
+            $currentlyPlayingGame = CurrentlyPlayingGame::where('game_id', $existingGame->id)->first();
+            $message = 'Game already exists in completed games list';
+        } else {
+            //also need to see if game is in another list and delete it from there!
+
+            $this->clearGameFromLists($existingGame->id, Auth::user()->id);
+
+            $currentlyPlayingGame = CurrentlyPlayingGame::create([
+                'user_id' => Auth::user()->id,
+                'game_id' => $existingGame->id,
+            ]);
+            $message = 'Game added to completed games list';
+        }
+
+        return $this->success([
+            'game' => $currentlyPlayingGame,
+        ], $message);
     }
 
     /**

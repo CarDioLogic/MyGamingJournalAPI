@@ -26,15 +26,6 @@ Route::get('publishers/search/', 'PublisherController@search');
 Route::apiResource('developers', 'DeveloperController');
 Route::get('developers/search/', 'DeveloperController@search');
 
-Route::apiResource('playLaterGames', 'PlayLaterGamesController');
-Route::get('playLaterGames/search/', 'PlayLaterGamesController@search');
-
-Route::apiResource('currentlyPlayingGames', 'CurrentlyPlayingGamesController');
-Route::get('currentlyPlayingGames/search/', 'CurrentlyPlayingGamesController@search');
-
-Route::apiResource('playedGame', 'PlayedGameController');
-Route::get('playedGame/search/', 'PlayedGameController@search');
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -49,7 +40,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::apiResource('games', 'GameController');
     Route::apiResource('completedGames', 'CompletedGameController');
-
-
+    Route::apiResource('playLaterGames', 'PlayLaterGamesController');
+    Route::apiResource('currentlyPlayingGames', 'CurrentlyPlayingGameController');
+    Route::apiResource('playedGame', 'PlayedGameController');
+\
     Route::apiResource('genres', 'GenreController');
 });

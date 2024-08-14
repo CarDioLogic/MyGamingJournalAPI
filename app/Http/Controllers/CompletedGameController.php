@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\CompletedGame;
-use App\Game;
+
 use App\Http\Requests\StoreGameRequest;
 use Auth;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses; 
+use App\Traits\GameManagement;
+use Illuminate\Http\Request;
+
+
 
 
 class CompletedGameController extends Controller
 {
     use HttpResponses;
+    use GameManagement;
 
     /**
      * Display a listing of the resource.
@@ -21,7 +25,7 @@ class CompletedGameController extends Controller
      */
     public function index()
     {
-        //
+        return CompletedGame::all();
     }
 
     /**
@@ -57,6 +61,8 @@ class CompletedGameController extends Controller
         } else {
             //also need to see if game is in another list and delete it from there!
 
+            $this->clearGameFromLists($existingGame->id, Auth::user()->id);
+
             $completedGame = CompletedGame::create([
                 'user_id' => Auth::user()->id,
                 'game_id' => $existingGame->id,
@@ -64,13 +70,12 @@ class CompletedGameController extends Controller
             $message = 'Game added to completed games list';
         }
 
-
         return $this->success([
             'game' => $completedGame,
         ], $message);
     }
 
-    public function checkOrCreateGame(StoreGameRequest $request){
+/*     protected function checkOrCreateGame(StoreGameRequest $request){
         $existingGame = Game::where('rawgApiId', $request->rawgApiId)->first();
 
         //also need to verify if the game_id is aleady in other lists
@@ -83,6 +88,22 @@ class CompletedGameController extends Controller
 
         return $existingGame;
     }
+
+    protected function clearGameFromLists($gameId, $userId)
+    {
+        $listsToCheck = [
+            CompletedGame::class,
+            CurrentlyPlayingGame::class,
+            PlayLaterGames::class,
+            PlayedGame::class,
+        ];
+
+        foreach ($listsToCheck as $list) {
+            $list::where('game_id', $gameId)
+                ->where('user_id', $userId)
+                ->delete();
+        }
+    } */
 
     /**
      * Display the specified resource.
