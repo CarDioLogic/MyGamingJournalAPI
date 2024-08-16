@@ -15,24 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('genres/search/', 'GenreController@search');
-
-Route::apiResource('platforms', 'PlatformController');
-Route::get('platforms/search/', 'PlatformController@search');
-
-Route::apiResource('publishers', 'PublisherController');
-Route::get('publishers/search/', 'PublisherController@search');
-
-Route::apiResource('developers', 'DeveloperController');
-Route::get('developers/search/', 'DeveloperController@search');
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::post('/login', 'UserController@login');
 Route::post('/register', 'UserController@register');
-
 
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
@@ -43,6 +31,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource('playLaterGames', 'PlayLaterGamesController');
     Route::apiResource('currentlyPlayingGames', 'CurrentlyPlayingGameController');
     Route::apiResource('playedGame', 'PlayedGameController');
-\
+    
+    Route::apiResource('platforms', 'PlatformController');
+    Route::apiResource('publishers', 'PublisherController');
+    Route::apiResource('developers', 'DeveloperController');
     Route::apiResource('genres', 'GenreController');
 });

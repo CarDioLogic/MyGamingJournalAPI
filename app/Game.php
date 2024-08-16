@@ -14,6 +14,7 @@ class Game extends Model
         'game_site_url',
         'game_img_url',
         'release_date',
+        'profile_image',
     ];
     protected $hidden = ['pivot'];
 

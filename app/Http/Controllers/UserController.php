@@ -10,6 +10,7 @@ use App\User;
 use Auth;
 use Hash;
 use App\traits\HttpResponses;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -17,13 +18,14 @@ class UserController extends Controller
 
     public function login(LoginUserRequest $request)
     {
+
         $request->validated();
 
-        if(!Auth::attempt($request->only('email', 'password'))){
+        if(!Auth::attempt($request->only('name', 'password'))){
             return $this->error('', 'Credentials do not match', 401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('name', $request->name)->first();
 
         return $this->success([
             'user' => $user,
@@ -35,11 +37,20 @@ class UserController extends Controller
     {
         $request->validated();
 
+        if ($request->hasFile('profile_image')) {
+            $profileImage = $request->file('profile_image');
+            $profileImagePath = $profileImage->store('profile_images', 'public');
+            $profileImageUrl = Storage::url($profileImagePath);
+            
+        } else {
+            $profileImageUrl = '';
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
-
+            'password' => Hash::make($request->password),
+            'profile_image' => $profileImageUrl,
         ]);
 
         return $this->success([

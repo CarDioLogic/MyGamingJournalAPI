@@ -10,10 +10,12 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Resources\GamesResource;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses; 
+use App\Traits\GameManagement;
 
 class GameController extends Controller
 {
     use HttpResponses;
+    use GameManagement;
 
     /**
      * Display a listing of the resource.
@@ -68,33 +70,6 @@ class GameController extends Controller
     ]);
     }
 
-    public function createNewGenres(StoreGameRequest $request, Game $game){
-        $genreIds = [];
-        foreach ($request->genres as $genreName) {
-            $genre = Genre::firstOrCreate(['name' => $genreName]);
-            $genreIds[] = $genre->id;
-        }
-    
-        $game->genres()->sync($genreIds);
-    }
-    public function createNewPlatforms(StoreGameRequest $request, Game $game){
-        $platformsIds = [];
-        foreach ($request->platforms as $platformName) {
-            $platform = Platform::firstOrCreate(['name' => $platformName]);
-            $platformsIds[] = $platform->id;
-        }
-    
-        $game->platforms()->sync($platformsIds);
-    }
-    public function createNewPublishers(StoreGameRequest $request, Game $game){
-        $publisherIds = [];
-        foreach ($request->publishers as $publisherName) {
-            $publisher = Publisher::firstOrCreate(['name' => $publisherName]);
-            $publisherIds[] = $publisher->id;
-        }
-    
-        $game->publishers()->sync($publisherIds);
-    }
     /**
      * Display the specified resource.
      *
