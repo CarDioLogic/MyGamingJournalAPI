@@ -31,8 +31,6 @@ class StoreGameRequest extends FormRequest
             'game_site_url' => ['required', 'string', 'max:255'],
             'game_img_url' => ['required', 'string', 'max:255'],
             'release_date' => ['required', 'string', 'max:255'],
-
         ];
-
     }
 }

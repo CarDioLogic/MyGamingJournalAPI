@@ -10,7 +10,7 @@ use App\Platform;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Resources\GamesResource;
 use Illuminate\Http\Request;
-use App\Traits\HttpResponses; 
+use App\Traits\HttpResponses;
 use App\Traits\GameManagement;
 
 class GameController extends Controller
@@ -28,16 +28,6 @@ class GameController extends Controller
         $games = Game::with(['genres', 'platforms', 'publishers'])->get();
 
         return $games;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -66,9 +56,9 @@ class GameController extends Controller
         $this->createNewPlatforms($request, $game);
         $this->createNewPublishers($request, $game);
 
-    return $this->success([
-        'game' => new GamesResource($game),
-    ]);
+        return $this->success([
+            'game' => new GamesResource($game),
+        ]);
     }
 
     /**
@@ -94,17 +84,6 @@ class GameController extends Controller
         return;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Game $game)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

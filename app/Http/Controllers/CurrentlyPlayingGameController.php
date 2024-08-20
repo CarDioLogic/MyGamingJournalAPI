@@ -6,7 +6,7 @@ use App\CurrentlyPlayingGame;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGameRequest;
 use Auth;
-use App\Traits\HttpResponses; 
+use App\Traits\HttpResponses;
 use App\Traits\GameManagement;
 
 class CurrentlyPlayingGameController extends Controller
@@ -25,7 +25,8 @@ class CurrentlyPlayingGameController extends Controller
             'games.platforms',
             'games.publishers',
             'games.developers'
-        ])->get();    }
+        ])->get();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -49,16 +50,13 @@ class CurrentlyPlayingGameController extends Controller
 
         $existingGame = $this->checkOrCreateGame($request);
 
-        // Also need to verify if the game_id is already in other lists
-        // Example of adding a completed game:
-
-        if(CurrentlyPlayingGame::where('game_id', $existingGame->id)->exists()
-        && CurrentlyPlayingGame::where('user_id', Auth::user()->id)->exists())
-        {
+        if (
+            CurrentlyPlayingGame::where('game_id', $existingGame->id)->exists()
+            && CurrentlyPlayingGame::where('user_id', Auth::user()->id)->exists()
+        ) {
             $currentlyPlayingGame = CurrentlyPlayingGame::where('game_id', $existingGame->id)->first();
             $message = 'Game already exists in completed games list';
         } else {
-            //also need to see if game is in another list and delete it from there!
 
             $this->clearGameFromLists($existingGame->id, Auth::user()->id);
 

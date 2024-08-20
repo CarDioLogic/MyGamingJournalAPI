@@ -30,7 +30,6 @@ trait GameManagement{
             $createdGameResponse = $gameController->store($request);
 
             $existingGame = Game::where('rawgApiId', $request->rawgApiId)->first();
-            //$existingGame = $createdGameResponse->getData()->game;
         }
 
         return $existingGame;

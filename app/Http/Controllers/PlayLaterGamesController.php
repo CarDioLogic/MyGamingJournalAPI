@@ -27,15 +27,6 @@ class PlayLaterGamesController extends Controller
             'games.developers'
         ])->get();    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -85,16 +76,6 @@ class PlayLaterGamesController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PlayLaterGames  $playLaterGames
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PlayLaterGames $playLaterGames)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

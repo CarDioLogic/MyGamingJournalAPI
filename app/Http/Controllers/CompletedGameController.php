@@ -7,7 +7,7 @@ use App\CompletedGame;
 use App\Http\Requests\StoreGameRequest;
 use Auth;
 use app\Game;
-use App\Traits\HttpResponses; 
+use App\Traits\HttpResponses;
 use App\Traits\GameManagement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +34,7 @@ class CompletedGameController extends Controller
             'games.publishers',
             'games.developers'
         ])->get();
-        
+
     }
 
     /**
@@ -54,9 +54,10 @@ class CompletedGameController extends Controller
         // Also need to verify if the game_id is already in other lists
         // Example of adding a completed game:
 
-        if(CompletedGame::where('game_id', $existingGame->id)->exists()
-        && CompletedGame::where('user_id', Auth::user()->id)->exists())
-        {
+        if (
+            CompletedGame::where('game_id', $existingGame->id)->exists()
+            && CompletedGame::where('user_id', Auth::user()->id)->exists()
+        ) {
             $completedGame = CompletedGame::where('game_id', $existingGame->id)->first();
             $message = 'Game already exists in completed games list';
         } else {
