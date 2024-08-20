@@ -20,8 +20,12 @@ class PlayLaterGamesController extends Controller
      */
     public function index()
     {
-        return PlayLaterGames::all();
-    }
+        return PlayLaterGames::with([
+            'games.genres',
+            'games.platforms',
+            'games.publishers',
+            'games.developers'
+        ])->get();    }
 
     /**
      * Show the form for creating a new resource.

@@ -18,7 +18,7 @@ class CreateGamesTable extends Migration
             $table->string('rawgApiId');
             $table->string('title');
             $table->string('thumbnail');
-            $table->string('short_description');
+            $table->string('short_description')->nullable();
             $table->string('game_site_url');
             $table->string('game_img_url');
             $table->string('release_date');

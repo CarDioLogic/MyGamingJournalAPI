@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\CompletedGame;
 use App\CurrentlyPlayingGame;
+use App\Http\Requests\StoreGameRequest;
 use App\PlayLaterGames;
 use App\PlayedGame;
 use App\Game;
@@ -16,12 +17,16 @@ use App\Http\Controllers\GameController;
 
 
 trait GameManagement{
-    public function checkOrCreateGame($request)
+    
+    public function checkOrCreateGame(StoreGameRequest $request)
     {
+
         $existingGame = Game::where('rawgApiId', $request->rawgApiId)->first();
 
         if (!$existingGame) {
+
             $gameController = new GameController();
+
             $createdGameResponse = $gameController->store($request);
 
             $existingGame = Game::where('rawgApiId', $request->rawgApiId)->first();

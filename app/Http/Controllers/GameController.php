@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use Auth;
 use App\Genre;
 use App\Publisher;
 use App\Platform;
@@ -87,9 +88,10 @@ class GameController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function edit(Game $game)
+    public function removeGameFromAllLists(string $id)
     {
-        //
+        $this->clearGameFromLists($id, Auth::user()->id);
+        return;
     }
 
     /**

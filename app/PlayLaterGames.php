@@ -12,6 +12,6 @@ class PlayLaterGames extends Model
     ];
     public function games()
     {
-        return $this->hasOne('App\Game');
+        return $this->belongsTo('App\Game', 'game_id');
     }
 }

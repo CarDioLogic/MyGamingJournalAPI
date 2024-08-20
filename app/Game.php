@@ -20,34 +20,34 @@ class Game extends Model
 
     public function genres()
     {
-        return $this->belongsToMany('App\Genre');
+        return $this->belongsToMany('App\Genre', 'game_genre');
     }
     public function platforms()
     {
-        return $this->belongsToMany('App\Platform');
+        return $this->belongsToMany('App\Platform', 'game_platform');
     }
     public function publishers()
     {
-        return $this->belongsToMany('App\Publisher');
+        return $this->belongsToMany('App\Publisher', 'game_publisher');
     }
     public function developers()
     {
-        return $this->belongsToMany('App\Developer');
+        return $this->belongsToMany('App\Developer', 'game_developer');
     }
     public function playLaterGames()
     {
-        return $this->hasOne('App\PlayLaterGames');
+        return $this->hasOne('App\PlayLaterGames', 'game_id');
     }
     public function playedGames()
     {
-        return $this->hasOne('App\PlayedGame');
+        return $this->hasOne('App\PlayedGame', 'game_id');
     }
     public function currentlyPlaying()
     {
-        return $this->hasOne('App\CurrentlyPlayingGame');
+        return $this->hasOne('App\CurrentlyPlayingGame', 'game_id');
     }
     public function completedGames()
     {
-        return $this->hasOne('App\CompletedGame');
+        return $this->hasOne('App\CompletedGame', 'game_id');
     }
 }

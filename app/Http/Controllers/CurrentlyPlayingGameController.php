@@ -20,8 +20,12 @@ class CurrentlyPlayingGameController extends Controller
      */
     public function index()
     {
-        return CurrentlyPlayingGame::all();
-    }
+        return CurrentlyPlayingGame::with([
+            'games.genres',
+            'games.platforms',
+            'games.publishers',
+            'games.developers'
+        ])->get();    }
 
     /**
      * Show the form for creating a new resource.

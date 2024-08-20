@@ -27,7 +27,7 @@ class StoreGameRequest extends FormRequest
             'rawgApiId' => ['required', 'string', 'max:255'],
             'title' => ['required', 'string', 'max:255'],
             'thumbnail' => ['required', 'string', 'max:255'],
-            'short_description' => ['required', 'string', 'max:255'],
+            'short_description' => ['nullable', 'string', 'max:255'],
             'game_site_url' => ['required', 'string', 'max:255'],
             'game_img_url' => ['required', 'string', 'max:255'],
             'release_date' => ['required', 'string', 'max:255'],

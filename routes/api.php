@@ -25,7 +25,11 @@ Route::post('/register', 'UserController@register');
 //protected routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', 'UserController@logout');
+    Route::get('getUser/{Id}', 'UserController@show');
+    Route::post('/updateUser/{id}', 'UserController@updateUser');
+    Route::delete('/deleteUser/{id}', 'UserController@destroy');
 
+    Route::delete('/deleteGameFromLists/{id}', 'GameController@removeGameFromAllLists');
     Route::apiResource('games', 'GameController');
     Route::apiResource('completedGames', 'CompletedGameController');
     Route::apiResource('playLaterGames', 'PlayLaterGamesController');

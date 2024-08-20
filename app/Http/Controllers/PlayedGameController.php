@@ -20,8 +20,12 @@ class PlayedGameController extends Controller
      */
     public function index()
     {
-        return PlayedGame::all();
-    }
+        return PlayedGame::with([
+            'games.genres',
+            'games.platforms',
+            'games.publishers',
+            'games.developers'
+        ])->get();    }
 
     /**
      * Show the form for creating a new resource.
