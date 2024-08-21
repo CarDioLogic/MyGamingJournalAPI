@@ -7,7 +7,7 @@ Check out [MyGamingJournalAPI](https://github.com/CarDioLogic/MyGamingJournalAPI
 ## Technologies Used
 - laravel, sanctum, php
 
-## Queries/gateways
+## Api endpoints
 
 ## Author:
 - [João Silva](https://github.com/CarDioLogic)
