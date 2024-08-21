@@ -28,12 +28,14 @@ class CompletedGameController extends Controller
      */
     public function index()
     {
+        $userId = Auth::user()->id;
+
         return CompletedGame::with([
             'games.genres',
             'games.platforms',
             'games.publishers',
             'games.developers'
-        ])->get();
+        ])->where('user_id', $userId)->get();
 
     }
 

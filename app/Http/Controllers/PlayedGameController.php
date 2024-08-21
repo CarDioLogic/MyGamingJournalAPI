@@ -20,12 +20,15 @@ class PlayedGameController extends Controller
      */
     public function index()
     {
+        $userId = Auth::user()->id;
+
         return PlayedGame::with([
             'games.genres',
             'games.platforms',
             'games.publishers',
             'games.developers'
-        ])->get();    }
+        ])->where('user_id', $userId)->get();
+    }
 
     /**
      * Store a newly created resource in storage.
